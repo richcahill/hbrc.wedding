@@ -4,14 +4,17 @@
 	import { Button } from '$lib/components/ui/button';
 	import { Input } from '$lib/components/ui/input';
 	import { toast } from 'svelte-sonner';
+	import { track } from '@vercel/analytics';
 
 	let inputPassword = '';
 
 	function login() {
 		if (passwords.includes(inputPassword)) {
 			userPassword.set(inputPassword);
+			track('login_success', { password: inputPassword });
 			goto('/2024'); // Redirect to the protected route
 		} else {
+			track('login_failed', { password: inputPassword });
 			toast.error('Invalid password');
 		}
 	}

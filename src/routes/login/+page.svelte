@@ -5,7 +5,7 @@
 	import { Input } from '$lib/components/ui/input';
 	import { toast } from 'svelte-sonner';
 	import { track } from '@vercel/analytics';
-
+	import Logo from '$lib/components/Logo.svelte';
 	let inputPassword = '';
 
 	function login() {
@@ -21,13 +21,14 @@
 </script>
 
 <div class="w-screen h-screen bg-zinc-950 flex items-center justify-center">
-	<div class="flex flex-col gap-2">
+	<div class="flex flex-col gap-2 items-center">
+		<Logo size={128} />
 		<Input
 			type="password"
 			bind:value={inputPassword}
 			class="text-center"
 			placeholder="Enter password"
 		/>
-		<Button on:click={login}>Login</Button>
+		<Button on:click={login} class="w-full">Login</Button>
 	</div>
 </div>

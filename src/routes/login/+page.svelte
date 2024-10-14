@@ -6,6 +6,7 @@
 	import { toast } from 'svelte-sonner';
 	import { track } from '@vercel/analytics';
 	import Logo from '$lib/components/Logo.svelte';
+	import Photos from '$lib/components/Photos.svelte';
 	let inputPassword = '';
 
 	function login() {
@@ -21,7 +22,10 @@
 </script>
 
 <div class="w-screen h-screen bg-zinc-950 flex items-center justify-center">
-	<div class="flex flex-col gap-2 items-center">
+	<div class="absolute inset-0">
+		<Photos />
+	</div>
+	<div class="flex flex-col gap-2 items-center z-20">
 		<Logo size={128} />
 		<Input
 			type="password"

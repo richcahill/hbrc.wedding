@@ -1,14 +1,23 @@
 <script>
-	import Logo from '$lib/Logo.svelte';
+	import { onMount } from 'svelte';
+	import { userPassword } from '../stores/auth';
+	import { goto } from '$app/navigation';
+
+	let password;
+
+	onMount(() => {
+		const unsubscribe = userPassword.subscribe((value) => {
+			password = value;
+			if (password) {
+				goto('/2024'); // Redirect to the protected route if authenticated
+			} else {
+				goto('/login'); // Redirect to the login page if not authenticated
+			}
+		});
+
+		return () => unsubscribe();
+	});
 </script>
 
-<svelte:head>
-	<title>HBRC — Wedding</title>
-	<link
-		rel="icon"
-		href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💍</text></svg>"
-	/>
-</svelte:head>
-<div class="w-screen h-screen bg-zinc-950 flex items-center justify-center">
-	<Logo />
-</div>
+<!-- Optionally, you can keep the Logo component for a brief loading state -->
+<div class="w-screen h-screen bg-zinc-950 flex items-center justify-center"></div>

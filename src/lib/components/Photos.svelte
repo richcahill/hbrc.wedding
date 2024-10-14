@@ -117,14 +117,32 @@
 			displayedImages = displayedImages.slice(-maxImages);
 		}
 	}
+	function handleClick(event) {
+		const x = event.clientX;
+		const y = event.clientY;
+
+		lastMouseX = x;
+		lastMouseY = y;
+
+		addRandomPhoto();
+	}
+
+	function handleKeyDown(event) {
+		if (event.key === ' ') {
+			addRandomPhoto();
+		}
+	}
 </script>
 
 <div
+	class="w-screen h-screen bg-zinc-950 relative overflow-hidden cursor-crosshair"
 	bind:this={container}
-	class="w-screen h-screen bg-zinc-950 relative overflow-hidden"
 	on:mousemove={handleMouseMove}
 	on:mouseleave={handleMouseLeave}
-	role="complementary"
+	on:click={handleClick}
+	role="button"
+	tabindex="-1"
+	on:keydown={handleKeyDown}
 >
 	{#each displayedImages as image (image.id)}
 		<img

@@ -1,6 +1,7 @@
 <script>
 	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
+	import { optimize } from '$lib/image';
 
 	// Import your photos
 	import photo1 from '$lib/media/1.jpeg';
@@ -190,7 +191,8 @@
 	{#each displayedImages as image (image.id)}
 		<img
 			src={image.src}
-			alt=""
+			alt="hbrc"
+			srcset={optimize(image.src)}
 			style="
 				left: {image.left}%;
 				top: {image.top}%;

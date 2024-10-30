@@ -1,3 +1,4 @@
+// svelte.config.js
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 import adapter from '@sveltejs/adapter-vercel';
 

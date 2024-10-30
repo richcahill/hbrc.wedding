@@ -87,12 +87,6 @@
 	// Reference to the container div
 	let container;
 
-	// Preload images by creating hidden image elements
-	let preloadedImages = photos.map((photo) => ({
-		src: photo,
-		id: Math.random().toString(36).substr(2, 9)
-	}));
-
 	// Function to handle mouse movement
 	function handleMouseMove(event) {
 		const x = event.clientX;
@@ -206,13 +200,6 @@
 			in:fade={{ duration: 200 }}
 			out:fade={{ duration: 1000 }}
 		/>
-	{/each}
-</div>
-
-<!-- Hidden container for preloading images -->
-<div style="display: none;">
-	{#each preloadedImages as image (image.id)}
-		<img src={image.src} alt="" />
 	{/each}
 </div>
 

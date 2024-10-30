@@ -153,7 +153,7 @@
 				top: {image.top}%;
 				transform: translate(-50%, -50%) rotate({image.rotation}deg);
 			"
-			class="absolute w-48 h-auto rounded-sm filter contrast-120"
+			class="absolute w-32 h-auto rounded-sm filter contrast-120"
 			in:fade={{ duration: 200 }}
 			out:fade={{ duration: 1000 }}
 		/>

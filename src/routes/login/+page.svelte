@@ -27,12 +27,13 @@
 	</div>
 	<div class="flex flex-col gap-2 items-center z-20">
 		<Logo size={128} />
-		<Input
+		<!-- <Input
 			type="password"
 			bind:value={inputPassword}
 			class="text-center"
 			placeholder="Enter password"
 		/>
-		<Button on:click={login} class="w-full">Login</Button>
+		<Button on:click={login} class="w-full">Login</Button> -->
+		<a href="/rsvp"><Button class="w-full" variant="secondary">RSVP</Button></a>
 	</div>
 </div>

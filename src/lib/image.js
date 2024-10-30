@@ -1,4 +1,3 @@
-// utils/image.js
 import { dev } from '$app/environment';
 
 export function optimize(src, widths = [640, 960, 1280], quality = 90) {

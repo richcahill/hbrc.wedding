@@ -1,7 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
-	import { optimize } from '$lib/image';
 
 	// Dynamically import all images from the media directory
 	const images = import.meta.glob('$lib/media/*.{jpeg,jpg,png}', {

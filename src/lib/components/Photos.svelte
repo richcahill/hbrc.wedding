@@ -164,7 +164,6 @@
 		<img
 			src={image.src}
 			alt="hbrc"
-			srcset={optimize(image.src)}
 			style="
 				left: {image.left}%;
 				top: {image.top}%;

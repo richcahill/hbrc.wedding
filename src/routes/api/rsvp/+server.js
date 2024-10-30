@@ -33,7 +33,6 @@ export async function POST({ request }) {
 	const sheets = google.sheets({ version: 'v4', auth });
 	const spreadsheetId = '17qFnm8OJEXvB_LTAsjmhB57y2pTl-LxQ8Wm0znIs6iQ';
 	const range = 'RSVP!A1';
-	console.log(JSON.parse(GOOGLE_SERVICE_ACCOUNT_JSON).private_key);
 
 	try {
 		// Iterate over each name and append it as a separate row

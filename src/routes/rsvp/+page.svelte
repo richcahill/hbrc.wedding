@@ -12,10 +12,14 @@
 		names: [''],
 		response: 'Yes',
 		notes: '',
-		dietary: ''
+		dietary: '',
+		song: ''
 	};
 
+	let loading = false;
+
 	async function sendRsvp() {
+		loading = true;
 		try {
 			const response = await fetch('/api/rsvp', {
 				method: 'POST',
@@ -35,6 +39,8 @@
 				type: 'error',
 				message: 'There was an issue sending your RSVP. Send us a WhatsApp/iMessage ❤️'
 			};
+		} finally {
+			loading = false;
 		}
 	}
 
@@ -97,7 +103,9 @@
 				/>
 				<Textarea class="w-full" bind:value={rsvpData.notes} placeholder="Anything to add?" />
 
-				<Button class="w-full mt-4" on:click={sendRsvp}>Send RSVP</Button>
+				<Button class="w-full mt-4" on:click={sendRsvp} disabled={loading}>
+					{loading ? 'Sending...' : 'Send RSVP'}
+				</Button>
 			</div>
 		{/if}
 	</div>

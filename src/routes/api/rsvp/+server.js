@@ -19,7 +19,9 @@ export async function POST({ request }) {
 				spreadsheetId,
 				range,
 				valueInputOption: 'RAW',
-				requestBody: { values: [[name, data.response, data.notes]] }
+				requestBody: {
+					values: [[name, data.response, data.dietary, data.song, data.notes]]
+				}
 			});
 		}
 		return new Response(JSON.stringify({ success: true }), { status: 200 });

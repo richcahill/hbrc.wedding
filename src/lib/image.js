@@ -1,9 +1,16 @@
 import { dev } from '$app/environment';
 
 export function optimize(src, widths = [640, 960, 1280], quality = 90) {
-	if (dev) return src; // Use original in development
+	if (dev) return src; // Return original src in development
 
-	// For production, use absolute URL for Vercel's optimization
+	// Ensure `src` is a relative path
+	if (src.startsWith('https://hbrc.wedding')) {
+		src = src.replace('https://hbrc.wedding', '');
+	}
+	if (!src.startsWith('/')) {
+		src = `/${src}`;
+	}
+
 	const absoluteURL = `https://hbrc.wedding${src}`;
 
 	return widths

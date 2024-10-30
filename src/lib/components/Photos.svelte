@@ -11,10 +11,53 @@
 	import photo6 from '$lib/media/6.jpeg';
 	import photo7 from '$lib/media/7.jpeg';
 	import photo8 from '$lib/media/8.jpeg';
+	import photo9 from '$lib/media/9.jpg';
+	import photo10 from '$lib/media/10.jpg';
+	import photo11 from '$lib/media/11.jpg';
+	import photo12 from '$lib/media/12.jpg';
+	import photo13 from '$lib/media/13.jpg';
+	import photo14 from '$lib/media/14.jpg';
+	import photo15 from '$lib/media/15.jpg';
+	import photo16 from '$lib/media/16.jpg';
+	import photo17 from '$lib/media/17.jpg';
+	import photo18 from '$lib/media/18.jpg';
+	import photo19 from '$lib/media/19.jpg';
+	import photo20 from '$lib/media/20.jpg';
+	import photo21 from '$lib/media/21.jpg';
+	import photo22 from '$lib/media/22.jpg';
+	import photo23 from '$lib/media/23.png';
+	import photo24 from '$lib/media/24.png';
+	import photo25 from '$lib/media/25.png';
 	// Add more photos as needed
 
 	// Create an array of photos
-	let photos = [photo1, photo2, photo3, photo4, photo5, photo6, photo7, photo8];
+	let photos = [
+		photo1,
+		photo2,
+		photo3,
+		photo4,
+		photo5,
+		photo6,
+		photo7,
+		photo8,
+		photo9,
+		photo10,
+		photo11,
+		photo12,
+		photo13,
+		photo14,
+		photo15,
+		photo16,
+		photo17,
+		photo18,
+		photo19,
+		photo20,
+		photo21,
+		photo22,
+		photo23,
+		photo24,
+		photo25
+	];
 
 	// Function to shuffle an array
 	function shuffleArray(array) {
@@ -39,10 +82,16 @@
 	let lastMouseX = null;
 	let lastMouseY = null;
 	let cumulativeDistance = 0;
-	const thresholdDistance = 248; // Distance in pixels
+	const thresholdDistance = 128; // Distance in pixels
 
 	// Reference to the container div
 	let container;
+
+	// Preload images by creating hidden image elements
+	let preloadedImages = photos.map((photo) => ({
+		src: photo,
+		id: Math.random().toString(36).substr(2, 9)
+	}));
 
 	// Function to handle mouse movement
 	function handleMouseMove(event) {
@@ -157,6 +206,13 @@
 			in:fade={{ duration: 200 }}
 			out:fade={{ duration: 1000 }}
 		/>
+	{/each}
+</div>
+
+<!-- Hidden container for preloading images -->
+<div style="display: none;">
+	{#each preloadedImages as image (image.id)}
+		<img src={image.src} alt="" />
 	{/each}
 </div>
 

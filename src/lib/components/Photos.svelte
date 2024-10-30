@@ -13,7 +13,6 @@
 	// Create an array of photos from the imported images
 	let photos = Object.values(images);
 
-
 	// Function to shuffle an array
 	function shuffleArray(array) {
 		let shuffledArray = array.slice();
@@ -26,7 +25,6 @@
 
 	// Shuffle the photos array
 	let shuffledPhotos = shuffleArray(photos);
-
 
 	// Keep track of used photos to avoid repeats
 	let usedPhotos = [];
@@ -128,7 +126,6 @@
 			displayedImages = [...displayedImages];
 		}, 10);
 	}
-
 
 	function handleClick(event) {
 		const x = event.clientX;

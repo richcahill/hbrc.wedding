@@ -1,7 +1,7 @@
 import { dev } from '$app/environment';
 
 export function optimize(src, widths = [640, 960, 1280], quality = 90) {
-	if (dev) return src; // Use original source in development
+	if (dev) return src;
 
 	return widths
 		.slice()

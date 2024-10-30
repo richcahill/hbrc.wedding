@@ -14,7 +14,16 @@ const config = {
 			images: {
 				sizes: [640, 828, 1200, 1920, 3840],
 				formats: ['image/avif', 'image/webp'],
-				minimumCacheTTL: 300
+				minimumCacheTTL: 300,
+				domains: ['hbrc.wedding'], // Ensure your domain is listed here
+				remotePatterns: [
+					{
+						protocol: 'https',
+						hostname: 'hbrc.wedding',
+						port: '', // Leave empty unless you use a non-standard port
+						pathname: '/images/**' // Adjust the path to match your images
+					}
+				]
 			}
 		})
 	},

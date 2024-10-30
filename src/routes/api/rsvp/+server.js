@@ -1,8 +1,30 @@
-import { GOOGLE_SERVICE_ACCOUNT_JSON } from '$env/static/private';
+import {
+	GOOGLE_SERVICE_ACCOUNT_TYPE,
+	GOOGLE_PROJECT_ID,
+	GOOGLE_PRIVATE_KEY_ID,
+	GOOGLE_PRIVATE_KEY,
+	GOOGLE_CLIENT_EMAIL,
+	GOOGLE_CLIENT_ID,
+	GOOGLE_AUTH_URI,
+	GOOGLE_TOKEN_URI,
+	GOOGLE_AUTH_PROVIDER_X509_CERT_URL,
+	GOOGLE_CLIENT_X509_CERT_URL
+} from '$env/static/private';
 import { google } from 'googleapis';
 
 const auth = new google.auth.GoogleAuth({
-	credentials: JSON.parse(GOOGLE_SERVICE_ACCOUNT_JSON),
+	credentials: {
+		type: GOOGLE_SERVICE_ACCOUNT_TYPE,
+		project_id: GOOGLE_PROJECT_ID,
+		private_key_id: GOOGLE_PRIVATE_KEY_ID,
+		private_key: GOOGLE_PRIVATE_KEY,
+		client_email: GOOGLE_CLIENT_EMAIL,
+		client_id: GOOGLE_CLIENT_ID,
+		auth_uri: GOOGLE_AUTH_URI,
+		token_uri: GOOGLE_TOKEN_URI,
+		auth_provider_x509_cert_url: GOOGLE_AUTH_PROVIDER_X509_CERT_URL,
+		client_x509_cert_url: GOOGLE_CLIENT_X509_CERT_URL
+	},
 	scopes: ['https://www.googleapis.com/auth/spreadsheets']
 });
 

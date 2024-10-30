@@ -1,36 +1,17 @@
 <script>
 	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
-	import { optimize } from '$lib/image';
 
-	// Create an array of photos
-	let photos = [
-		'/images/1.jpeg',
-		'/images/2.jpeg',
-		'/images/3.jpeg',
-		'/images/4.jpeg',
-		'/images/5.jpeg',
-		'/images/6.jpeg',
-		'/images/7.jpeg',
-		'/images/8.jpeg',
-		'/images/9.jpg',
-		'/images/10.jpg',
-		'/images/11.jpg',
-		'/images/12.jpg',
-		'/images/13.jpg',
-		'/images/14.jpg',
-		'/images/15.jpg',
-		'/images/16.jpg',
-		'/images/17.jpg',
-		'/images/18.jpg',
-		'/images/19.jpg',
-		'/images/20.jpg',
-		'/images/21.jpg',
-		'/images/22.jpg',
-		'/images/23.png',
-		'/images/24.png',
-		'/images/25.png'
-	];
+	// Dynamically import all images from the media directory
+	const images = import.meta.glob('$lib/media/*.{jpeg,jpg,png}', {
+		eager: true,
+		query: {
+			enhanced: true
+		}
+	});
+
+	// Create an array of photos from the imported images
+	let photos = Object.values(images);
 
 	// Function to shuffle an array
 	function shuffleArray(array) {
@@ -95,44 +76,57 @@
 		cumulativeDistance = 0;
 	}
 
-	// Function to add a random photo
+	// Initial setup for cycling through images
+	let currentIndex = 0;
+
 	function addRandomPhoto() {
 		if (shuffledPhotos.length === 0) {
-			// Re-shuffle the used photos and reset
 			shuffledPhotos = shuffleArray(usedPhotos);
 			usedPhotos = [];
 		}
 
-		// Get a photo from the shuffled array
 		const photo = shuffledPhotos.pop();
 		usedPhotos.push(photo);
 
-		// Generate a random rotation angle between -45 and 45 degrees
 		const rotation = Math.floor(Math.random() * 90) - 45;
-
-		// Get cursor position relative to the container
 		const rect = container.getBoundingClientRect();
 		const left = ((lastMouseX - rect.left) / rect.width) * 100;
 		const top = ((lastMouseY - rect.top) / rect.height) * 100;
 
-		// Create an image object with a unique ID
-		const image = {
-			src: photo,
-			rotation,
-			left,
-			top,
-			id: Math.random().toString(36).substr(2, 9)
+		const newImage = {
+			module: photo,
+			info: {
+				rotation: rotation,
+				left: left,
+				top: top,
+				id: Math.random().toString(36).substr(2, 9),
+				opacity: 0 // Start with 0 opacity for fade-in
+			}
 		};
 
-		// Add the image to the displayed images array
-		displayedImages = [...displayedImages, image];
-
-		// Optional: Limit the number of displayed images
 		const maxImages = 8;
-		if (displayedImages.length > maxImages) {
-			displayedImages = displayedImages.slice(-maxImages);
+		if (displayedImages.length >= maxImages) {
+			// Trigger fade-out for the oldest image
+			displayedImages[0].info.opacity = 0;
+
+			// Delay actual removal to allow fade-out to complete
+			setTimeout(() => {
+				displayedImages = displayedImages.slice(1);
+			}, 200); // Match this delay to the CSS transition duration
 		}
+
+		// Add the new image
+		displayedImages = [...displayedImages, newImage];
+
+		currentIndex = (currentIndex + 1) % maxImages;
+
+		// Trigger fade-in effect by setting opacity to 1 after a short delay
+		setTimeout(() => {
+			newImage.info.opacity = 1;
+			displayedImages = [...displayedImages];
+		}, 10);
 	}
+
 	function handleClick(event) {
 		const x = event.clientX;
 		const y = event.clientY;
@@ -160,18 +154,18 @@
 	tabindex="-1"
 	on:keydown={handleKeyDown}
 >
-	{#each displayedImages as image (image.id)}
-		<img
-			src={image.src}
+	{#each displayedImages as { module, info } (info.id)}
+		<enhanced:img
+			src={module.default}
 			alt="hbrc"
 			style="
-				left: {image.left}%;
-				top: {image.top}%;
-				transform: translate(-50%, -50%) rotate({image.rotation}deg);
-			"
+			left: {info.left}%;
+			top: {info.top}%;
+			transform: translate(-50%, -50%) rotate({info.rotation}deg);
+			opacity: {info.opacity};
+			transition: opacity 0.2s ease-in-out;
+		"
 			class="absolute w-32 h-auto rounded-sm filter contrast-120"
-			in:fade={{ duration: 200 }}
-			out:fade={{ duration: 1000 }}
 		/>
 	{/each}
 </div>

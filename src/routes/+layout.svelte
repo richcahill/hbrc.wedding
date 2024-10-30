@@ -15,9 +15,11 @@
 		const unsubscribe = userPassword.subscribe((value) => {
 			password = value;
 			const currentPath = window.location.pathname;
-			if (!password && currentPath !== '/rsvp') {
-				goto('/login'); // Redirect to login if not authenticated and not on RSVP page
-			}
+
+			// TEMP: Comment out redirection for testing
+			// if (!password && currentPath !== '/rsvp') {
+			//	goto('/login');
+			// }
 		});
 
 		return () => unsubscribe();

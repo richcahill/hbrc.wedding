@@ -10,21 +10,36 @@
 
 	let rsvpData = {
 		names: [''],
-		response: 'Yes',
+		response: null,
 		notes: '',
 		dietary: '',
 		song: ''
 	};
 
 	let loading = false;
+	let isValid = false;
+
+	$: {
+		const namesValid = rsvpData.names.some(name => name.trim().length > 0);
+		const responseValid = Boolean(rsvpData.response);
+	
+		
+		isValid = namesValid && responseValid;
+	}
 
 	async function sendRsvp() {
+		if (!isValid) return;
 		loading = true;
 		try {
+			const dataToSend = {
+				...rsvpData,
+				response: rsvpData.response.value
+			};
+
 			const response = await fetch('/api/rsvp', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({ data: rsvpData })
+				body: JSON.stringify({ data: dataToSend })
 			});
 			if (response.ok) {
 				serverResponse = { type: 'success', message: 'Thanks for your RSVP! ❤️' };
@@ -45,7 +60,6 @@
 	}
 
 	function addName() {
-		console.log('Add Name button clicked');
 		rsvpData.names = [...rsvpData.names, ''];
 	}
 
@@ -86,9 +100,17 @@
 					{/each}
 					<Button on:click={addName}>Add Name</Button>
 				</div>
-				<Select.Root bind:value={rsvpData.response}>
+				<Select.Root 
+					selected={rsvpData.response}
+					onSelectedChange={(value) => {
+						rsvpData = {
+							...rsvpData,
+							response: value
+						};
+					}}
+				>
 					<Select.Trigger>
-						<Select.Value placeholder="Response" />
+						<Select.Value placeholder="Can you make it?" />
 					</Select.Trigger>
 					<Select.Content>
 						<Select.Item value="Yes">Yes</Select.Item>
@@ -103,7 +125,7 @@
 				/>
 				<Textarea class="w-full" bind:value={rsvpData.notes} placeholder="Anything to add?" />
 
-				<Button class="w-full mt-4" on:click={sendRsvp} disabled={loading}>
+				<Button class="w-full mt-4" on:click={sendRsvp} disabled={loading || !isValid}>
 					{loading ? 'Sending...' : 'Send RSVP'}
 				</Button>
 			</div>
